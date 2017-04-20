@@ -12,6 +12,10 @@ public class GameBoard{
   }
   
   public void displayBoard(){
+     
+  }
+  
+  public void updateBoard(int column, char pieceType){
   
   }
   
@@ -28,7 +32,11 @@ public class GameBoard{
   }
   
   
-  public checkTie(){
+  public boolean checkTie(){
+  
+  }
+  
+  public int checkMaxConnects(char symbol){
   
   }
   
