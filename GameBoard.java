@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * This class models a ConnectFour gameboard of variable size. 
  */
@@ -16,13 +18,28 @@ public class GameBoard{
      }
      this.gridSize = gridSize;
      this.numberToConnect = gridSize / 2;
+     
+     grid = new char[gridSize][gridSize];
+     
+     for(int i = 0; i < gridSize; i++){
+        Arrays.fill(grid[i],' ');
+     }
   }
   
   /**
    * Displays the gameboard as ASCII text on the screen
    */
   public void displayBoard(){ 
-     
+     for(int i = 0; i < gridSize; i++){
+        for(int j = 0; j< gridSize; j++){
+           System.out.print(grid[i][j] + "|");
+        }
+        System.out.println();
+        for(int k = 0; k < gridSize * 2; k++){
+           System.out.print("-");
+        }
+        System.out.println();
+     }
   }
   
   /**
@@ -32,7 +49,31 @@ public class GameBoard{
    * @param pieceType The character being used as the players piece
    */
   public void updateBoard(int column, char pieceType){
+     
+     for(int i = gridSize - 1; i >= 0; i--){
+        if(grid[i][column] == ' '){
+           grid[i][column] = pieceType; break;
+        }
+     }
+     
+  }
   
+  /**
+   *
+   */
+  public boolean validMove(int column){
+     if(column < 0 || column > gridSize - 1){
+        return false;
+     }
+     
+     for(int i = 0; i < gridSize; i++){
+        if(grid[i][column] == ' '){
+           return true;
+        }
+     }
+     
+     return false;
+     
   }
   
   /**
@@ -57,7 +98,85 @@ public class GameBoard{
    * yet over
    */
   public int checkPlayerWin(char pieceType){
-     return -1; 
+     
+     //Check row win
+     for(int row = 0; row < gridSize; row++){
+        int connects = 0;
+        for(int column = 0; column < gridSize; column++){
+           if(grid[row][column] == pieceType) {
+              connects++;
+           } else {
+              connects = 0;
+           }  
+           
+           if (connects == gridSize/2) {
+              return 1;
+           }  
+        }
+     }
+     
+     //Check column win
+     for(int column = 0; column < gridSize; column++){
+        int connects = 0;
+        for(int row = 0; row < gridSize; row++){
+           if(grid[row][column] == pieceType) {
+              connects++;
+           } else {
+              connects = 0;
+           }  
+           
+           if (connects == gridSize/2) {
+              return 1;
+           }  
+        }
+     }
+     
+     //Check for diagonal wins
+     for(int i = 0; i < gridSize; i++){
+        int connects = 0;
+        int row1 = i; int column1 = 0;
+        while(row1 >= 0) {
+           if(grid[row1][column1] == pieceType) {
+              connects++;
+           } else {
+              connects = 0;
+           }  
+           if (connects == gridSize/2) {
+              return 1;
+           }  
+           
+           row1--;
+           column1++;
+           
+        
+        }
+        }
+        
+        for(int i = 0; i < gridSize; i++){
+           int connects = 0;
+           int row1 = 0; int column1 = i;
+           while(column1 >= 0) {
+                 if(grid[row1][column1] == pieceType) {
+                    connects++;
+                 } else {
+                    connects = 0;
+                 }  
+                 if (connects == gridSize/2) {
+                   return 1;
+                 }  
+           
+                 row1++;
+                 column1--;
+           
+              
+           }
+        }
+     
+     if(this.checkTie()){
+        return 0;
+     }
+     return -1;
+     
   }
   
   /**
@@ -65,7 +184,14 @@ public class GameBoard{
    * @return True if there is a tie, False if there is not a tie
    */
   public boolean checkTie(){
-     return false;
+     for(int i = 0; i < gridSize; i++){
+        for(int j = 0; j< gridSize; j++){
+           if(grid[i][j] == ' '){
+              return false;
+           }
+        }
+     }
+     return true;
   }
   
   /**

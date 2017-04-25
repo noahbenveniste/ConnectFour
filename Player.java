@@ -11,6 +11,8 @@ public class Player{
     private int maxConnects; // The highest number of connects that the player currently has
     
     private int numberOfWins; // Number of wins this player has during this run of the program
+    
+    private int playerNumber; // Enumeration for the instance of the player
      
     /**
      * Constructer for player class
@@ -19,6 +21,7 @@ public class Player{
      */
     public Player (int num, char pieceType) {
        this.pieceType = pieceType;
+       this.playerNumber = num;
     }
     
     /**
@@ -79,6 +82,13 @@ public class Player{
      */
     public void setMaxConnects(){
        
+    }
+    
+    /**
+     *
+     */
+    public int getPlayerNum(){
+       return playerNumber;
     }
     
 }
