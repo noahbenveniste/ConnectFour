@@ -36,7 +36,7 @@ public class GameBoard{
    */
   public void displayBoard(){
   
-     for(int x = 0; x < gridSize * 2 + 1; x++){       //Fenceposts a row of dashes to make
+     for(int x = 0; x < gridSize * 2 + 1; x++){    //Fenceposts a row of dashes to make
         System.out.print("-");                    //the top of the board
      }
      System.out.println();

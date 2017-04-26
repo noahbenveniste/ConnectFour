@@ -80,8 +80,8 @@ public class Player{
     /**
      * Sets the max number of connects
      */
-    public void setMaxConnects(){
-       
+    public void setMaxConnects(GameBoard board){
+       maxConnects = board.checkMaxConnects(pieceType);
     }
     
     /**
@@ -90,6 +90,11 @@ public class Player{
      */
     public int getPlayerNum(){
        return playerNumber;
+    }
+    
+    public void printStatistics(){
+       System.out.println("Player " + playerNumber + " Moves Made : " + moveCount);
+       System.out.println("Player " + playerNumber + " Total Pieces Connectd : " + maxConnects);
     }
     
 }

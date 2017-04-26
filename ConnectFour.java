@@ -13,6 +13,7 @@ public class ConnectFour{
 
    /** Minimum board width/height */
    static final int MIN_BOARD_SIZE = 4;
+   
 
    /** Maximum board width/height */
    static final int MAX_BOARD_SIZE = 20;
@@ -37,11 +38,13 @@ public class ConnectFour{
       
       player1 = new Player(1,'x');
       player2 = new Player(2,'o');
-      board = new GameBoard(boardSize);
-   
-      boolean playagain = true;
-      while(playagain == true){ //While the players want to continue playing
       
+   
+      boolean playAgain = true;
+      while(playAgain == true){ //While the players want to continue playing
+      
+      board = new GameBoard(boardSize);
+         
          board.displayBoard();
          
          boolean noWinner = true;
@@ -50,6 +53,7 @@ public class ConnectFour{
             playerMove(player1, console);
             
             board.displayBoard();
+            player1.printStatistics();
             
             if(board.checkPlayerWin(player1.getPieceType()) == 1       //if player 1 won
                || board.checkPlayerWin(player1.getPieceType()) == 0){  //or if there was a tie
@@ -62,12 +66,43 @@ public class ConnectFour{
             }
             
             board.displayBoard();
+            player2.printStatistics();
 
             if(board.checkPlayerWin(player2.getPieceType()) == 1       //if player 2 won
                || board.checkPlayerWin(player2.getPieceType()) == 0){  //or if there was a tie
-               noWinner = false;                                       //then there was a winner(or tie)
+               noWinner = false;                                     //then there was a winner(or tie)
             }
          } 
+         
+         if(board.checkPlayerWin(player1.getPieceType()) == 1 ){
+            player1.addWin();
+            System.out.println("Player 1 Wins!");
+         }
+         
+         if(board.checkPlayerWin(player2.getPieceType()) == 1 ){
+            player2.addWin();
+            System.out.println("Player 2 Wins!");
+         }
+         
+         System.out.println();
+         System.out.println("Player 1 has won: " + player1.getWins());
+         System.out.println("Player 2 has won: " + player2.getWins());
+         
+         System.out.println("Do you want to play again?");
+         String choice = console.next();
+         
+         while(Character.toLowerCase(choice.charAt(0)) != 'y' && Character.toLowerCase(choice.charAt(0)) != 'n'){
+            System.out.print("Invalid Input, Try Again: ");
+            choice = console.next();
+         }
+         
+         if(Character.toLowerCase(choice.charAt(0)) == 'y'){
+         
+         }
+         else if(Character.toLowerCase(choice.charAt(0)) == 'n'){
+            
+         }
+         
       } 
    }
    
@@ -78,13 +113,21 @@ public class ConnectFour{
    public static void playerMove(Player player, Scanner console){
       System.out.print("Player " + player.getPlayerNum() + "'s turn. Enter a column 1 - " + board.getGridSize() + ": ");
       
+      while(!console.hasNextInt()){
+         console.next();
+         System.out.print("Invalid Input, Try Again: ");
+      }
       int input = console.nextInt();
+      
       while(!board.validMove(input - 1)){
          System.out.print("Invalid move, try again\n" + "Enter a column 1 - " + board.getGridSize() + ": " );
          input = console.nextInt();
       }
       
       board.updateBoard(input - 1, player.getPieceType());
+      
+      player.addMoveCount();
+      player.setMaxConnects(board);
       
    }
    
