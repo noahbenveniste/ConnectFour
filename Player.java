@@ -94,7 +94,7 @@ public class Player{
     
     public void printStatistics(){
        System.out.println("Player " + playerNumber + " Moves Made : " + moveCount);
-       System.out.println("Player " + playerNumber + " Total Pieces Connectd : " + maxConnects);
+       System.out.println("Player " + playerNumber + " Total Pieces Connected : " + maxConnects);
     }
     
 }
