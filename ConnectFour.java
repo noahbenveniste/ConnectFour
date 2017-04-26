@@ -9,6 +9,10 @@ import java.util.*;
 //-PowerPoint
 //-Submit Everything
 
+/**
+ * This class handles the main logic for the Connect Four game
+ * @author Team 6, Jose Quinones, Noah Benveniste and Sean Devers
+ */
 public class ConnectFour{
 
    /** Minimum board width/height */

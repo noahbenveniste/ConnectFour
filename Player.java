@@ -1,5 +1,6 @@
 /**
  * This class models a Player of ConnectFour
+ * @author Team 6, Jose Quinones, Noah Benveniste and Sean Devers
  */
 public class Player{
     
@@ -92,6 +93,9 @@ public class Player{
        return playerNumber;
     }
     
+    /**
+     * Prints player statistics
+     */
     public void printStatistics(){
        System.out.println("Player " + playerNumber + " Moves Made : " + moveCount);
        System.out.println("Player " + playerNumber + " Total Pieces Connected : " + maxConnects);
