@@ -61,18 +61,18 @@ public class ConnectFour{
             }
             
             
-            if(noWinner){
-            playerMove(player2, console); 
+            if(noWinner){                                              //if player 1 did not win previously
+               playerMove(player2, console); 
+               board.displayBoard();
+               player2.printStatistics();
+               if(board.checkPlayerWin(player2.getPieceType()) == 1     //if player 2 won
+               || board.checkPlayerWin(player2.getPieceType()) == 0){   //or if there was a tie
+                  noWinner = false;                                     //then there was a winner(or tie)
+               }
             }
             
-            board.displayBoard();
-            player2.printStatistics();
 
-            if(board.checkPlayerWin(player2.getPieceType()) == 1       //if player 2 won
-               || board.checkPlayerWin(player2.getPieceType()) == 0){  //or if there was a tie
-               noWinner = false;                                     //then there was a winner(or tie)
-            }
-         } 
+                     } 
          
          if(board.checkPlayerWin(player1.getPieceType()) == 1 ){
             player1.addWin();
@@ -96,11 +96,8 @@ public class ConnectFour{
             choice = console.next();
          }
          
-         if(Character.toLowerCase(choice.charAt(0)) == 'y'){
-         
-         }
-         else if(Character.toLowerCase(choice.charAt(0)) == 'n'){
-            
+         if(Character.toLowerCase(choice.charAt(0)) == 'n'){
+            playAgain = false;
          }
          
       } 
