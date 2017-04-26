@@ -1,5 +1,14 @@
 import java.util.*;
 
+//TO DO
+//-Handle main game logic
+//-Add connected pieces and total pieces to the display
+//-Testing
+//-Update UML Diagram
+//-Update Journal
+//-PowerPoint
+//-Submit Everything
+
 public class ConnectFour{
 
    static Player player1;
@@ -10,13 +19,15 @@ public class ConnectFour{
    
       player1 = new Player(1,'x');
       player2 = new Player(2,'o');
-      board = new GameBoard(8);
+      board = new GameBoard(10);
       
       Scanner console = new Scanner(System.in);
    
       boolean playagain = true;
       while(playagain == true){ //While the players want to continue playing
       
+         board.displayBoard();
+         
          boolean noWinner = true;
          while(noWinner){
            
@@ -26,7 +37,7 @@ public class ConnectFour{
             
             if(board.checkPlayerWin(player1.getPieceType()) == 1       //if player 1 won
                || board.checkPlayerWin(player1.getPieceType()) == 0){  //or if there was a tie
-               noWinner = false; playagain = false;                                  //then there was a winner(or tie)
+               noWinner = false;                                       //then there was a winner(or tie)
             }
             
             
@@ -38,15 +49,11 @@ public class ConnectFour{
 
             if(board.checkPlayerWin(player2.getPieceType()) == 1       //if player 2 won
                || board.checkPlayerWin(player2.getPieceType()) == 0){  //or if there was a tie
-               noWinner = false; playagain = false;                                 //then there was a winner(or tie)
+               noWinner = false;                                       //then there was a winner(or tie)
             }
 
             
          }
-         
-         
-         //TO DO
-         //Handle resetting or exiting the game after someone has won
          
          
       }

@@ -16,12 +16,12 @@ public class Player{
      
     /**
      * Constructer for player class
-     * @param num I don't understand what this is for currently
+     * @param playerNum The number associated with the player
      * @param pieceType The character to be used as the players piece
      */
-    public Player (int num, char pieceType) {
+    public Player (int playerNumber, char pieceType) {
        this.pieceType = pieceType;
-       this.playerNumber = num;
+       this.playerNumber = playerNumber;
     }
     
     /**
@@ -60,14 +60,14 @@ public class Player{
      * Adds one win to the total number of wins that a player has
      */
     public void addWin() {
-       numberOfWins ++;
+       numberOfWins++;
     }
     
     /**
      * Adds one to the total number of moves that a player has made
      */
     public void addMoveCount() {
-       moveCount ++;
+       moveCount++;
     }
     
     /** 
@@ -85,7 +85,8 @@ public class Player{
     }
     
     /**
-     *
+     * Getter Method for playerNum
+     * @return The enumeration of the player
      */
     public int getPlayerNum(){
        return playerNumber;

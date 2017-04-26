@@ -11,7 +11,12 @@ public class GameBoard{
   
   private int gridSize; //the size of the grid representing the gameboard
   
-  
+  /**
+   * Constructor for Gameboard. Only allows an even gridSize so that the number of pieces
+   * connected to win can always be a whole number. Initializes gridSize, numberToConnect, grid,
+   * and fills grid with spaces.
+   * @param gridSize the size that we want the game board to be. Must be even.
+   */
   public GameBoard(int gridSize){
      if(gridSize % 2 != 0){
         throw new IllegalArgumentException("gridSize must be an even integer");
@@ -29,17 +34,25 @@ public class GameBoard{
   /**
    * Displays the gameboard as ASCII text on the screen
    */
-  public void displayBoard(){ 
-     for(int i = 0; i < gridSize; i++){
-        for(int j = 0; j< gridSize; j++){
-           System.out.print(grid[i][j] + "|");
-        }
-        System.out.println();
-        for(int k = 0; k < gridSize * 2; k++){
-           System.out.print("-");
-        }
-        System.out.println();
+  public void displayBoard(){
+  
+     for(int x = 0; x < gridSize * 2 + 1; x++){       //Fenceposts a row of dashes to make
+        System.out.print("-");                    //the top of the board
      }
+     System.out.println();
+ 
+     for(int i = 0; i < gridSize; i++){           //Displays a fenceposted | and then the contents
+        System.out.print("|");                    //of one of the cells of the grid array and
+        for(int j = 0; j< gridSize; j++){         //then another |, and repeats for the rest of
+           System.out.print(grid[i][j] + "|");    //the line
+        }
+        System.out.println();
+        for(int k = 0; k < gridSize * 2 + 1; k++){    //Adds another row of dashes in between the lines
+           System.out.print("-");                 //of data
+        }
+        System.out.println();
+     }                                            //Repeats until the board is fully diplayed
+     System.out.println();
   }
   
   /**
@@ -59,7 +72,9 @@ public class GameBoard{
   }
   
   /**
-   *
+   * Checks if a chosen column is a valid move or not
+   * @param column The column chosen as the player's move
+   * @return true if the move is valid, false otherwise
    */
   public boolean validMove(int column){
      if(column < 0 || column > gridSize - 1){
@@ -109,7 +124,7 @@ public class GameBoard{
               connects = 0;
            }  
            
-           if (connects == gridSize/2) {
+           if (connects == numberToConnect) {
               return 1;
            }  
         }
@@ -125,13 +140,13 @@ public class GameBoard{
               connects = 0;
            }  
            
-           if (connects == gridSize/2) {
+           if (connects == numberToConnect) {
               return 1;
            }  
         }
      }
      
-     //Check for diagonal wins
+     //Check for diagonal wins one way
      for(int i = 0; i < gridSize; i++){
         int connects = 0;
         int row1 = i; int column1 = 0;
@@ -141,7 +156,7 @@ public class GameBoard{
            } else {
               connects = 0;
            }  
-           if (connects == gridSize/2) {
+           if (connects == numberToConnect) {
               return 1;
            }  
            
@@ -152,6 +167,7 @@ public class GameBoard{
         }
         }
         
+        //Check for diagonal wins the other way
         for(int i = 0; i < gridSize; i++){
            int connects = 0;
            int row1 = 0; int column1 = i;
@@ -161,7 +177,7 @@ public class GameBoard{
                  } else {
                     connects = 0;
                  }  
-                 if (connects == gridSize/2) {
+                 if (connects == numberToConnect) {
                    return 1;
                  }  
            
@@ -201,9 +217,77 @@ public class GameBoard{
    * @return The max number of connections of the pieceType found in a row
    */
   public int checkMaxConnects(char pieceType){
-      return 0;
+     int maxConnects = 0;
+     
+     //Count row pieces
+     for(int row = 0; row < gridSize; row++){
+        int connects = 0;
+        for(int column = 0; column < gridSize; column++){
+           if(grid[row][column] == pieceType) {
+              connects++;
+           } else {
+              connects = 0;
+           }  
+             
+           maxConnects = Math.max(maxConnects, connects);  
+        }
+     }
+     
+     //Count column pieces
+     for(int column = 0; column < gridSize; column++){
+        int connects = 0;
+        for(int row = 0; row < gridSize; row++){
+           if(grid[row][column] == pieceType) {
+              connects++;
+           } else {
+              connects = 0;
+           }  
+        
+           maxConnects = Math.max(maxConnects, connects);   
+        }
+     }
+     
+     //Check for diagonal wins one way
+     for(int i = 0; i < gridSize; i++){
+        int connects = 0;
+        int row1 = i; int column1 = 0;
+        while(row1 >= 0) {
+           if(grid[row1][column1] == pieceType) {
+              connects++;
+           } else {
+              connects = 0;
+           }  
+           
+           maxConnects = Math.max(maxConnects, connects);
+           
+           row1--;
+           column1++;
+           
+        
+        }
+        }
+        
+        //Check fo diagonal wins the other way
+        for(int i = 0; i < gridSize; i++){
+           int connects = 0;
+           int row1 = 0; int column1 = i;
+           while(column1 >= 0) {
+                 if(grid[row1][column1] == pieceType) {
+                    connects++;
+                 } else {
+                    connects = 0;
+                 }  
+                 
+                 maxConnects = Math.max(maxConnects, connects);           
+                 
+                 row1++;
+                 column1--;
+           
+           }
+        }
+
+     return maxConnects;
+     
   }
   
-  
-
 }
