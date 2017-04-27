@@ -125,87 +125,142 @@ public class GameBoard{
     */
    public int checkPlayerWin(char pieceType) {
       
-      //Check row win
-      for(int row = 0; row < gridSize; row++) {
-         int connects = 0;
-         for(int column = 0; column < gridSize; column++) {
-            if(grid[row][column] == pieceType) {
-               connects++;
-            } else {
-               connects = 0;
-            }  
-            
-            if (connects == numberToConnect) {
-               return 1;
-            }  
-         }
-      }
+     int count = 0;
+     for (int i = 0; i < gridSize; i++) {
+        for (int j = 0; j < gridSize; j++) {
+           if(grid[i][j] == pieceType) {
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index down 
+                 if (i + k >= gridSize) { //prevent index out of bounds THIS ONE IS WEIRD
+                    count = 0;
+                    break;
+                 } else if (grid[i+k][j] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if (count == numberToConnect) {
+                 return 1;
+              }
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index up
+                 if (i - k < 0) { //prevent index out of bounds
+                    count = 0;
+                    break;
+                 } else if (grid[i-k][j] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if (count == numberToConnect) {
+                 return 1;
+              }
+              
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index left
+                 if(j - k < 0) { //prevent index out of bounds
+                    count = 0;
+                    break;
+                 } else if(grid[i][j-k] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+                 
+              }
+              if(count == numberToConnect) {
+                 return 1;
+              }
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index right
+                 if(j + k > gridSize){ //prevent index out of bounds
+                    count = 0;
+                    break;
+                 }
+                 else if(grid[i][j + k] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if(count == numberToConnect) {
+                 return 1;
+              }
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index upper right
+                 if(i - k < 0 || j + k > gridSize) { //prevent index out of bounds
+                    count = 0;
+                    break;
+                 } else if(grid[i - k][j + k] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if(count == numberToConnect) {
+                 return 1;
+              }
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index upper left
+                 if(i - k < 0 || j - k < 0){ //prevent index out of bounds
+                    count = 0;
+                    break;
+                 } else if(grid[i - k][j - k] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if(count == numberToConnect) {
+                 return 1;
+              }
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index lower right
+                 if(i + k > numberToConnect || j + k > numberToConnect) {  //prevent index out of bounds
+                    count = 0;
+                    break;
+                 } else if(grid[i + k][j + k] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if(count == numberToConnect) {
+                 return 1;
+              }
+              
+              for (int k = 0; k < numberToConnect; k++) { //Index lower left
+                 if(i + k > numberToConnect || j - k < 0) {  //prevent index out of bounds
+                    count = 0;
+                    break;
+                 } else if(grid[i + k][j - k] != pieceType) {
+                    count = 0;
+                    break;
+                 } else {
+                    count++;
+                 }
+              }
+              if(count == numberToConnect) {
+                 return 1;
+              }
+           }
+        }
+     }
      
-      //Check column win
-      for(int column = 0; column < gridSize; column++) {
-         int connects = 0;
-         for(int row = 0; row < gridSize; row++) {
-            if(grid[row][column] == pieceType) {
-               connects++;
-            } else {
-               connects = 0;
-            }  
-            
-            if (connects == numberToConnect) {
-               return 1;
-            }  
-         }
-      }
-      
-      //Check for diagonal wins one way
-      for(int i = 0; i < gridSize; i++) {
-         int connects = 0;
-         int row1 = i; 
-         int column1 = 0;
-         while(row1 >= 0) {
-            if(grid[row1][column1] == pieceType) {
-               connects++;
-            } else {
-               connects = 0;
-            }  
-            if (connects == numberToConnect) {
-               return 1;
-            }  
-            
-            row1--;
-            column1++;
-            
-         
-         }
-      }
-         
-      //Check for diagonal wins the other way
-      for(int i = 0; i < gridSize; i++) {
-         int connects = 0;
-         int row1 = 0; 
-         int column1 = i;
-         while(column1 >= 0) {
-            if(grid[row1][column1] == pieceType) {
-               connects++;
-            } else {
-               connects = 0;
-            }  
-            if (connects == numberToConnect) {
-               return 1;
-            }  
-            
-            row1++;
-            column1--;
-            
-               
-         }
-      }
-      
-      if(this.checkTie()) {
-         return 0;
-      }
-      return -1;
-      
+     if(checkTie()) {
+        return 0;
+     } else {
+        return -1;
+     }            
    }
    
    /**
