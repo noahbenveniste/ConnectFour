@@ -1,14 +1,5 @@
 import java.util.*;
 
-//TO DO
-//-Handle main game logic
-//-Add connected pieces and total pieces to the display
-//-Testing
-//-Update UML Diagram
-//-Update Journal
-//-PowerPoint
-//-Submit Everything
-
 /**
  * This class handles the main logic for the Connect Four game
  * @author Team 6, Jose Quinones, Noah Benveniste and Sean Devers
@@ -16,7 +7,7 @@ import java.util.*;
 public class ConnectFour{
 
    /** Minimum board width/height */
-   static final int MIN_BOARD_SIZE = 4;
+   static final int MIN_BOARD_SIZE = 8;
    
 
    /** Maximum board width/height */
@@ -86,6 +77,10 @@ public class ConnectFour{
          if(board.checkPlayerWin(player2.getPieceType()) == 1 ){
             player2.addWin();
             System.out.println("Player 2 Wins!");
+         }
+         
+         if(board.checkPlayerWin(player1.getPieceType()) == 0){
+            System.out.println("It's a Tie!");
          }
          
          System.out.println();
