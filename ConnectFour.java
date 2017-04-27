@@ -39,6 +39,8 @@ public class ConnectFour{
       while(playAgain == true){ //While the players want to continue playing
       
       board = new GameBoard(boardSize);
+      player1.resetMoveCount();
+      player2.resetMoveCount();
          
          board.displayBoard();
          
