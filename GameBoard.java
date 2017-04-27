@@ -285,128 +285,127 @@ public class GameBoard{
     * @return The max number of connections of the pieceType found in a row
     */
    public int checkMaxConnects(char pieceType) {
-     int maxConnects = 0;
-     
-     int count = 0;
+   
+     int maxConnects = 1;
+     int count = 1;
+     int k = 1;
+     boolean disconnect = false;
      for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
            if(grid[i][j] == pieceType) {
               
-              for (int k = 0; k < numberToConnect; k++) { //Index down 
-                 if (i + k >= gridSize) { //prevent index out of bounds THIS ONE IS WEIRD
-                    count = 0;
-                    break;
-                 } else if (grid[i+k][j] != pieceType) {
-                    count = 0;
-                    break;
+              while(i + k < gridSize && !disconnect) {//Index down 
+                 if (grid[i+k][j] != pieceType) {
+                    count = 1;
+                    disconnect = true;
+                    break; 
                  } else {
                     count++;
+                    k++;
                     maxConnects = Math.max(maxConnects, count);
                  }
               }
               
-              
-              for (int k = 0; k < numberToConnect; k++) { //Index up
-                 if (i - k < 0) { //prevent index out of bounds
-                    count = 0;
-                    break;
-                 } else if (grid[i-k][j] != pieceType) {
-                    count = 0;
-                    break;
-                 } else {
-                    count++;
-                    maxConnects = Math.max(maxConnects, count);
-                 }
-              }
-                           
-              
-              for (int k = 0; k < numberToConnect; k++) { //Index left
-                 if(j - k < 0) { //prevent index out of bounds
-                    count = 0;
-                    break;
-                 } else if(grid[i][j-k] != pieceType) {
-                    count = 0;
+              k = 1;
+              disconnect = false;
+              while(i - k >= 0 && !disconnect) { //Index up
+                 if (grid[i-k][j] != pieceType) {
+                    count = 1;
+                    disconnect = true;
                     break;
                  } else {
                     count++;
+                    k++;
                     maxConnects = Math.max(maxConnects, count);
                  }
                  
-              }
-                             
-              for (int k = 0; k < numberToConnect; k++) { //Index right
-                 if(j + k >= gridSize){ //prevent index out of bounds
-                    count = 0;
-                    break;
-                 }
-                 else if(grid[i][j + k] != pieceType) {
-                    count = 0;
+              }          
+              
+              k = 1;
+              disconnect = false;
+              while (j - k >= 0 && !disconnect) { //Index left
+                 if(grid[i][j-k] != pieceType) {
+                    count = 1;
+                    disconnect = true;
                     break;
                  } else {
                     count++;
+                    k++;
+                    maxConnects = Math.max(maxConnects, count);
+                 } 
+              }
+              
+              k = 1;
+              disconnect = false;         
+              while (j + k < gridSize && !disconnect) { //Index right
+                 if(grid[i][j + k] != pieceType) {
+                    count = 1;
+                    disconnect = true;
+                    break;
+                 } else {
+                    count++;
+                    k++;
                     maxConnects = Math.max(maxConnects, count);
                  }
               }
               
-              
-              for (int k = 0; k < numberToConnect; k++) { //Index upper right
-                 if(i - k < 0 || j + k >= gridSize) { //prevent index out of bounds
-                    count = 0;
-                    break;
-                 } else if(grid[i - k][j + k] != pieceType) {
-                    count = 0;
-                    break;
-                 } else {
-                    count++;
-                    maxConnects = Math.max(maxConnects, count);
-                 }
-              }
-               
-              
-              for (int k = 0; k < numberToConnect; k++) { //Index upper left
-                 if(i - k < 0 || j - k < 0){ //prevent index out of bounds
-                    count = 0;
-                    break;
-                 } else if(grid[i - k][j - k] != pieceType) {
-                    count = 0;
+              k = 1;
+              disconnect = false;
+              while (i - k >= 0 && j + k < gridSize && !disconnect) { //Index upper right
+                 if(grid[i - k][j + k] != pieceType) {
+                    count = 1;
+                    disconnect = true;
                     break;
                  } else {
                     count++;
+                    k++;
                     maxConnects = Math.max(maxConnects, count);
                  }
               }
-               
               
-              for (int k = 0; k < numberToConnect; k++) { //Index lower right
-                 if(i + k >= gridSize || j + k >= gridSize) {  //prevent index out of bounds
-                    count = 0;
-                    break;
-                 } else if(grid[i + k][j + k] != pieceType) {
-                    count = 0;
+              k = 1;
+              disconnect = false;
+              while (i - k >= 0 && j - k >= 0 && !disconnect) { //Index upper left
+                 if(grid[i - k][j - k] != pieceType) {
+                    count = 1;
+                    disconnect = true;
                     break;
                  } else {
                     count++;
+                    k++;
                     maxConnects = Math.max(maxConnects, count);
                  }
               }
-               
               
-              for (int k = 0; k < numberToConnect; k++) { //Index lower left
-                 if(i + k >= gridSize || j - k < 0) {  //prevent index out of bounds
-                    count = 0;
-                    break;
-                 } else if(grid[i + k][j - k] != pieceType) {
-                    count = 0;
+              k = 1;
+              disconnect = false;
+              while (i + k < gridSize && j + k < gridSize && !disconnect) { //Index lower right
+                 if(grid[i + k][j + k] != pieceType) {
+                    count = 1;
+                    disconnect = true;
                     break;
                  } else {
                     count++;
+                    k++;
                     maxConnects = Math.max(maxConnects, count);
                  }
               }
-               
-           }
-        }
-     }   
-      return maxConnects;
-   }
+              
+              k = 1;
+              disconnect = false;
+              while (i + k < gridSize && j - k >= 0 && !disconnect) { //Index lower left
+                 if(grid[i + k][j - k] != pieceType) {
+                    count = 1;
+                    disconnect = true;
+                    break;
+                 } else {
+                    count++;
+                    k++;
+                    maxConnects = Math.max(maxConnects, count);
+                 }
+              }
+            }
+         }
+      }   
+      return maxConnects;   }
 }
